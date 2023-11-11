@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Data Display</title>
+    <script>
+        function updateData() {
+            // Use a Fetch API to get the contents of the data file
+            fetch('UVread.txt')
+                .then(response => response.text())
+                .then(data => {
+                    // Split the data into lines
+                    const lines = data.split('\n');
+                    
+                    // Assuming each line contains two values separated by a comma
+                    if (lines.length >= 2) {
+                        const values1 = lines[0].split(',');
+                        const values2 = lines[1].split(',');
+                        
+                        // Update the table with the new data
+                        document.getElementById('column1-heading').textContent = values1[0];
+                        document.getElementById('column2-heading').textContent = values2[0];
+                        document.getElementById('column1-data').textContent = values1[1];
+                        document.getElementById('column2-data').textContent = values2[1];
+                    }
+                });
+        }
+
+        // Update data every 10 seconds
+        setInterval(updateData, 10000);
+
+        // Initial data load
+        updateData();
+    </script>
+</head>
+<body>
+    <h1>Live Data Display</h1>
+    <table>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+        <tr>
+            <td id="column1-heading"></td>
+            <td id="column2-heading"></td>
+        </tr>
+        <tr>
+            <td id="column1-data"></td>
+            <td id="column2-data"></td>
+        </tr>
+    </table>
+</body>
+</html>
